@@ -13,14 +13,15 @@ const getTodos = asyncHandler(async (req, res) => {
 
 const setTodo = asyncHandler(async (req, res) => {
     console.log(req.body)
-    if (!req.body.text) {
+    if (!req.body.todo) {
+        // if (!req.body.text) { //holy shit
         // res.status(400).json({ message: 'Please add a text field' })
         res.status(400)
         throw new Error('Please add a todo field')
     }
 
     const todo = await Todo.create({
-        text: req.body.text
+        todo: req.body.todo
     })
 
     res.status(200).json(todo)
@@ -33,6 +34,7 @@ const updateTodo = asyncHandler(async (req, res) => {
 })
 
 const deleteTodo = asyncHandler(async (req, res) => {
+    const todo = await Todo.findById(req.params.id)
     res.status(200).json({ message: `Delete todo ${req.params.id}` })
 })
 
